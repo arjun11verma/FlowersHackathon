@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "168694765172",
+    "firebase_url": "https://painkb-4bcca.firebaseio.com",
+    "project_id": "painkb-4bcca",
+    "storage_bucket": "painkb-4bcca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:168694765172:android:37c477bf4456a2b17ea321",
+        "android_client_info": {
+          "package_name": "com.example.particlephoton"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "168694765172-3nb3ofnrocg5pitb5d2ahrcsnj8imf1s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCddh3yrT_V_MSZyI-pQDLz1-favKTnwU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "168694765172-3nb3ofnrocg5pitb5d2ahrcsnj8imf1s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
