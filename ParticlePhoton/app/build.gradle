@@ -40,4 +40,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'io.particle:cloudsdk:0.5.1'
     implementation 'com.google.firebase:firebase-database:19.4.0'
+    implementation "androidx.lifecycle:lifecycle-livedata"
+    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
 }
