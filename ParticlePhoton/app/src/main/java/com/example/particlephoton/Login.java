@@ -19,6 +19,7 @@ public class Login extends BaseView {
 
     public Login(Context context) {
         super(context);
+        activity.setContentView(R.layout.activity_main);
 
         Button login = null;
         login.setOnClickListener( onClick -> {
@@ -43,6 +44,7 @@ public class Login extends BaseView {
                         {
                             if(((User)user.getValue()).getPassword().equals(password))
                             {
+                                activity.setThisUser((User)user.getValue());
                                 activity.changeView(new ParentInterface(context));
                                 isValid = true;
                             }

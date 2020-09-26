@@ -21,12 +21,13 @@ public class MainActivity extends AppCompatActivity {
     //Firebase Account: Cheese Jenkins, cheesejenkins123@gmail.com, Pudding123 is the password
     private Database database = new Database();
     private ParticleDevice childDevice;
+    private User thisUser;
+    private BaseView thisView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ParticleCloudSDK.init(this);
-        setContentView(R.layout.activity_main);
 
         try {
             ParticleCloudSDK.getCloud().logIn("averma332@gatech.edu", "Timeline123#");
@@ -39,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         } catch (ParticleCloudException e) {
             e.printStackTrace();
         }
+
+        changeView(new Login(this));
     }
 
     public int getButtonNumber() throws ParticleCloudException, ParticleDevice.VariableDoesNotExistException, IOException {
@@ -58,6 +61,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void changeView(BaseView view) {
+        thisView = view;
+    }
 
+    public User getThisUser() {
+        return thisUser;
+    }
+
+    public void setThisUser(User user) {
+        thisUser = user;
     }
 }

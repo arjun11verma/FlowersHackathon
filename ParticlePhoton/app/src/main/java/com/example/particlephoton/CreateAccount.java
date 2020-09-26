@@ -50,7 +50,10 @@ public class CreateAccount extends BaseView {
                 createPassword.setError("Please enter a password!");
             }
 
-            ref.setValue(new User(username, password));
+            User newUser = new User(username, password);
+            ref.setValue(newUser);
+            activity.setThisUser(newUser);
+            activity.changeView(new ParentInterface(context));
         });
     }
 }
