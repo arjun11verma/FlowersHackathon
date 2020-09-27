@@ -51,10 +51,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="Make Account"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/unique" />
+        app:layout_constraintTop_toBottomOf="@+id/unique"
+        app:layout_constraintVertical_bias="0.037" />
 
     <EditText
         android:id="@+id/unique"
@@ -64,8 +66,11 @@
         android:ems="10"
         android:hint="Unique ID"
         android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/createPassword"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
