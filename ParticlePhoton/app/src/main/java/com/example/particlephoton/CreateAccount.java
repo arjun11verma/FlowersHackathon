@@ -16,17 +16,22 @@ import com.google.firebase.database.ValueEventListener;
 public class CreateAccount extends BaseView {
     private EditText createUsername;
     private EditText createPassword;
+    private EditText uniqueID;
 
     public CreateAccount(Context context) {
         super(context);
         activity.setContentView(R.layout.signup);
         createUsername = activity.findViewById(R.id.createUsername);
         createPassword = activity.findViewById(R.id.createPassword);
+        uniqueID = activity.findViewById(R.id.unique);
 
         Button createAccount = activity.findViewById(R.id.createAccount);
         createAccount.setOnClickListener( onClick -> {
             String username = createUsername.getText().toString();
             String password = createPassword.getText().toString();
+            String id = uniqueID.getText().toString();
+
+            if ()
 
             DatabaseReference ref = activity.getDatabase().getReference("Users");
             ref.addListenerForSingleValueEvent(new ValueEventListener() {
