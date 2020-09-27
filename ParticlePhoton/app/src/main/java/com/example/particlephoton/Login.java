@@ -20,18 +20,21 @@ public class Login extends BaseView {
 
     public Login(Context context) {
         super(context);
+        //Sets view
         activity.setContentView(R.layout.activity_main);
-
+        //Sets EditText vars to a corresponding text field
         enterUsername = activity.findViewById(R.id.enterUsername);
         enterPassword = activity.findViewById(R.id.enterPassword);
 
         Button login = activity.findViewById(R.id.loginButton);
+        //When login is clicked, the following is ran
         login.setOnClickListener( onClick -> {
+            //Creates strings that correspond to the EditText values
             String username = enterUsername.getText().toString();
             String password = enterPassword.getText().toString();
             isValidUser = false;
             isValidPassword = false;
-
+            //Creates a database object pointing towards "users".
             DatabaseReference ref = activity.getDatabase().getReference("Users");
 
             if(username.isEmpty()) {
@@ -45,6 +48,7 @@ public class Login extends BaseView {
             ref.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    //For all users within the database, check to see if what the client entered matches a pre-existing user.
                     for(DataSnapshot user: snapshot.getChildren()) {
                         if((user.child("username").getValue().equals(username)))
                         {
@@ -72,6 +76,7 @@ public class Login extends BaseView {
         });
 
         Button createAccount = activity.findViewById(R.id.createAccountButton);
+        //If the create account is clicked, send the user to the signup.xml
         createAccount.setOnClickListener(onClick -> {
             activity.changeView(new CreateAccount(activity));
         });
