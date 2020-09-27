@@ -19,8 +19,11 @@ public class CreateAccount extends BaseView {
 
     public CreateAccount(Context context) {
         super(context);
+        activity.setContentView(R.layout.signup);
+        createUsername = activity.findViewById(R.id.createUsername);
+        createPassword = activity.findViewById(R.id.createPassword);
 
-        Button createAccount = null;
+        Button createAccount = activity.findViewById(R.id.createAccount);
         createAccount.setOnClickListener( onClick -> {
             String username = createUsername.getText().toString();
             String password = createPassword.getText().toString();
