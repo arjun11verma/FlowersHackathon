@@ -53,6 +53,7 @@ public class Login extends BaseView {
                             {
                                 isValidPassword = true;
                                 activity.setThisUser(new User(username, password));
+                                activity.changeView(new TeacherPortal(activity));
                             }
                         }
                     }
