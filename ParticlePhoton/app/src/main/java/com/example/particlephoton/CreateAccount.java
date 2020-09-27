@@ -26,13 +26,13 @@ public class CreateAccount extends BaseView {
         createUsername = activity.findViewById(R.id.createUsername);
         createPassword = activity.findViewById(R.id.createPassword);
         uniqueID = activity.findViewById(R.id.unique);
-        checkValid = true;
 
         Button createAccount = activity.findViewById(R.id.createAccount);
         createAccount.setOnClickListener( onClick -> {
             String username = createUsername.getText().toString();
             String password = createPassword.getText().toString();
             String id = uniqueID.getText().toString();
+            checkValid = true;
 
             if(id.isEmpty() || !(thisID.equals(id))) {
                 uniqueID.setError("This is not a valid ID!");

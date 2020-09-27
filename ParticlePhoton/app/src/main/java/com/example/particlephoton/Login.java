@@ -15,7 +15,8 @@ import com.google.firebase.database.ValueEventListener;
 public class Login extends BaseView {
     private EditText enterUsername;
     private EditText enterPassword;
-    private boolean isValid = false;
+    private boolean isValidUser = false;
+    private boolean isValidPassword = false;
 
     public Login(Context context) {
         super(context);
@@ -28,6 +29,8 @@ public class Login extends BaseView {
         login.setOnClickListener( onClick -> {
             String username = enterUsername.getText().toString();
             String password = enterPassword.getText().toString();
+            isValidUser = false;
+            isValidPassword = false;
 
             DatabaseReference ref = activity.getDatabase().getReference("Users");
 
@@ -45,15 +48,18 @@ public class Login extends BaseView {
                     for(DataSnapshot user: snapshot.getChildren()) {
                         if((user.child("username").getValue().equals(username)))
                         {
+                            isValidUser = true;
                             if((user.child("password").getValue().equals(password)))
                             {
+                                isValidPassword = true;
                                 activity.setThisUser(new User(username, password));
-                                isValid = true;
                             }
                         }
                     }
-                    if(!isValid) {
+                    if(!isValidUser) {
                         enterUsername.setError("Please enter a valid username!");
+                    }
+                    if(!isValidPassword) {
                         enterPassword.setError("Please enter a valid password!");
                     }
                 }
