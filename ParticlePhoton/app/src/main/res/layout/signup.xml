@@ -21,10 +21,11 @@
 
     <TextView
         android:id="@+id/createTitle"
-        android:layout_width="197dp"
-        android:layout_height="32dp"
-        android:layout_marginTop="256dp"
+        android:layout_width="257dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="224dp"
         android:text="Create an Account"
+        android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,7 +36,7 @@
         android:id="@+id/createUsername"
         android:layout_width="210dp"
         android:layout_height="45dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:ems="10"
         android:hint="Username"
         android:inputType="textPersonName"
