@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.provider.Telephony;
+import android.util.Log;
 import android.view.View;
 
 import com.google.firebase.database.FirebaseDatabase;
@@ -26,22 +28,25 @@ public class MainActivity extends AppCompatActivity {
     private BaseView thisView;
     private boolean ifShot[];
     private int temp;
+    private ParticleCloudSDK particle;
+    private ParticleCloud cloud;
 
+    @SuppressLint("WrongThread")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ParticleCloudSDK.init(this);
-
+        particle.init(this);
+        cloud = particle.getCloud();
         ifShot = new boolean[]{false, false, false, false};
 
         try {
-            ParticleCloudSDK.getCloud().logIn("tsa0662@gmail.com", "something");
+            cloud.logIn("tsa0662@gmail.com", "something");
         } catch (ParticleCloudException e) {
             e.printStackTrace();
         }
 
         try {
-            childDevice = ParticleCloudSDK.getCloud().getDevice("38005f000e504b464d323520");
+            childDevice = cloud.getDevice("38005f000e504b464d323520");
         } catch (ParticleCloudException e) {
             e.printStackTrace();
         }
@@ -55,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public Integer callApi(ParticleDevice particleDevice) throws ParticleCloudException, IOException {
                     try {
-                        temp = childDevice.callFunction("Danger", Collections.singletonList("1"));
+                        temp = childDevice.callFunction("Danger", Collections.singletonList(("Cheese")));
                     } catch (ParticleDevice.FunctionDoesNotExistException e) {
                         e.printStackTrace();
                     }
