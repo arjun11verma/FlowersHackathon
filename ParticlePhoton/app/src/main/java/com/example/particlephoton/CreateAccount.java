@@ -18,6 +18,7 @@ public class CreateAccount extends BaseView {
     private EditText createPassword;
     private EditText uniqueID;
     private String thisID = "ARJUNISLAZY";
+    private boolean checkValid;
 
     public CreateAccount(Context context) {
         super(context);
@@ -25,6 +26,7 @@ public class CreateAccount extends BaseView {
         createUsername = activity.findViewById(R.id.createUsername);
         createPassword = activity.findViewById(R.id.createPassword);
         uniqueID = activity.findViewById(R.id.unique);
+        checkValid = true;
 
         Button createAccount = activity.findViewById(R.id.createAccount);
         createAccount.setOnClickListener( onClick -> {
@@ -32,8 +34,19 @@ public class CreateAccount extends BaseView {
             String password = createPassword.getText().toString();
             String id = uniqueID.getText().toString();
 
-            if(id.isEmpty() || !id.equals(thisID)) {
+            if(id.isEmpty() || !(thisID.equals(id))) {
                 uniqueID.setError("This is not a valid ID!");
+                checkValid = false;
+            }
+
+            if(username.isEmpty()) {
+                createUsername.setError("Please enter a username!");
+                checkValid = false;
+            }
+
+            if(password.isEmpty()) {
+                createPassword.setError("Please enter a password!");
+                checkValid = false;
             }
 
             DatabaseReference ref = activity.getDatabase().getReference("Users");
@@ -44,6 +57,7 @@ public class CreateAccount extends BaseView {
                         if(((User)user.getValue()).getUsername().equals(username))
                         {
                             createUsername.setError("This username has already been used!");
+                            checkValid = false;
                         }
                     }
                 }
@@ -54,18 +68,14 @@ public class CreateAccount extends BaseView {
                 }
             });
 
-            if(username.isEmpty()) {
-                createUsername.setError("Please enter a username!");
-            }
 
-            if(password.isEmpty()) {
-                createPassword.setError("Please enter a password!");
+            if(checkValid) {
+                User newUser = new User(username, password);
+                ref.setValue(newUser);
+                activity.setThisUser(newUser);
+                checkValid = false;
             }
-
-            User newUser = new User(username, password);
-            ref.setValue(newUser);
-            activity.setThisUser(newUser);
-            activity.changeView(new ParentInterface(context));
+            //activity.changeView(new ParentInterface(context));
         });
     }
 }
