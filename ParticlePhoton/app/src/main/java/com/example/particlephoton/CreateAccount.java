@@ -54,9 +54,9 @@ public class CreateAccount extends BaseView {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for(DataSnapshot user: snapshot.getChildren()) {
-                        if(((User)user.getValue()).getUsername().equals(username))
+                        if(user.child("username").getValue().equals(username))
                         {
-                            createUsername.setError("This username has already been used!");
+                            createUsername.setError("Please enter a valid username!");
                             checkValid = false;
                         }
                     }
@@ -68,14 +68,11 @@ public class CreateAccount extends BaseView {
                 }
             });
 
-
             if(checkValid) {
                 User newUser = new User(username, password);
-                ref.setValue(newUser);
-                activity.setThisUser(newUser);
-                checkValid = false;
+                ref.child(username).setValue(newUser);
+                activity.changeView(new Login(activity));
             }
-            //activity.changeView(new ParentInterface(context));
         });
     }
 }

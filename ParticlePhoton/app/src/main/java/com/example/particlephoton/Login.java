@@ -43,12 +43,11 @@ public class Login extends BaseView {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for(DataSnapshot user: snapshot.getChildren()) {
-                        if(((User)user.getValue()).getUsername().equals(username))
+                        if((user.child("username").getValue().equals(username)))
                         {
-                            if(((User)user.getValue()).getPassword().equals(password))
+                            if((user.child("password").getValue().equals(password)))
                             {
-                                activity.setThisUser((User)user.getValue());
-                                activity.changeView(new ParentInterface(context));
+                                activity.setThisUser(new User(username, password));
                                 isValid = true;
                             }
                         }

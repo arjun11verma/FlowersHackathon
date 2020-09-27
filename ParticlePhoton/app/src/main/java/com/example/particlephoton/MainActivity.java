@@ -44,15 +44,11 @@ public class MainActivity extends AppCompatActivity {
         changeView(new Login(this));
     }
 
-    public int getButtonNumber() throws ParticleCloudException, ParticleDevice.VariableDoesNotExistException, IOException {
-        return childDevice.getIntVariable("button");
-    }
-
-    public void sendOnTheWay() throws ParticleCloudException, IOException, ParticleDevice.FunctionDoesNotExistException {
+    public void shooter() throws ParticleCloudException, IOException, ParticleDevice.FunctionDoesNotExistException {
         childDevice.callFunction("setFlashingLight");
     }
 
-    public void sendCheckUp() throws ParticleCloudException, IOException, ParticleDevice.FunctionDoesNotExistException {
+    public void fire() throws ParticleCloudException, IOException, ParticleDevice.FunctionDoesNotExistException {
         childDevice.callFunction("setSolidLight");
     }
 
