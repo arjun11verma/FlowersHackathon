@@ -21,7 +21,10 @@ public class Login extends BaseView {
         super(context);
         activity.setContentView(R.layout.activity_main);
 
-        Button login = null;
+        enterUsername = activity.findViewById(R.id.enterUsername);
+        enterPassword = activity.findViewById(R.id.enterPassword);
+
+        Button login = activity.findViewById(R.id.loginButton);
         login.setOnClickListener( onClick -> {
             String username = enterUsername.getText().toString();
             String password = enterPassword.getText().toString();
@@ -51,8 +54,8 @@ public class Login extends BaseView {
                         }
                     }
                     if(!isValid) {
-                        enterUsername.setError("Please enter a username!");
-                        enterPassword.setError("Please enter a password!");
+                        enterUsername.setError("Please enter a valid username!");
+                        enterPassword.setError("Please enter a valid password!");
                     }
                 }
 
@@ -61,6 +64,11 @@ public class Login extends BaseView {
 
                 }
             });
+        });
+
+        Button createAccount = activity.findViewById(R.id.createAccountButton);
+        createAccount.setOnClickListener(onClick -> {
+            activity.changeView(new CreateAccount(activity));
         });
     }
 }
