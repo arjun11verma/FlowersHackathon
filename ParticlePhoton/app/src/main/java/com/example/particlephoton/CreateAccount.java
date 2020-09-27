@@ -17,6 +17,7 @@ public class CreateAccount extends BaseView {
     private EditText createUsername;
     private EditText createPassword;
     private EditText uniqueID;
+    private String thisID = "ARJUNISLAZY";
 
     public CreateAccount(Context context) {
         super(context);
@@ -31,7 +32,9 @@ public class CreateAccount extends BaseView {
             String password = createPassword.getText().toString();
             String id = uniqueID.getText().toString();
 
-            if ()
+            if(id.isEmpty() || !id.equals(thisID)) {
+                uniqueID.setError("This is not a valid ID!");
+            }
 
             DatabaseReference ref = activity.getDatabase().getReference("Users");
             ref.addListenerForSingleValueEvent(new ValueEventListener() {
