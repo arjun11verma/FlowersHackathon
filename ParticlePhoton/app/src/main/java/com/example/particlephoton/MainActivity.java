@@ -29,27 +29,33 @@ public class MainActivity extends AppCompatActivity {
     private boolean ifShot[];
     private int temp;
     private ParticleCloudSDK particle;
-    private ParticleCloud cloud;
 
     @SuppressLint("WrongThread")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         particle.init(this);
-        cloud = particle.getCloud();
-        ifShot = new boolean[]{false, false, false, false};
+        ifShot = new boolean[]{true, false, false, false};
 
-        try {
-            cloud.logIn("tsa0662@gmail.com", "something");
-        } catch (ParticleCloudException e) {
-            e.printStackTrace();
-        }
+        Async.executeAsync(particle.getCloud(), new Async.ApiWork<ParticleCloud, Object>() {
 
-        try {
-            childDevice = cloud.getDevice("38005f000e504b464d323520");
-        } catch (ParticleCloudException e) {
-            e.printStackTrace();
-        }
+            @Override
+            public Object callApi(ParticleCloud particleCloud) throws ParticleCloudException, IOException {
+                particleCloud.logIn("tsa0662@gmail.com", "something");
+                childDevice = particleCloud.getDevice("38005f000e504b464d323520");
+                return -1;
+            }
+
+            @Override
+            public void onSuccess(Object o) {
+                ifShot[0] = false;
+            }
+
+            @Override
+            public void onFailure(ParticleCloudException exception) {
+
+            }
+        });
 
         changeView(new Login(this));
     }
@@ -60,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public Integer callApi(ParticleDevice particleDevice) throws ParticleCloudException, IOException {
                     try {
-                        temp = childDevice.callFunction("Danger", Collections.singletonList(("Cheese")));
+                        temp = childDevice.callFunction("Danger");
                     } catch (ParticleDevice.FunctionDoesNotExistException e) {
                         e.printStackTrace();
                     }

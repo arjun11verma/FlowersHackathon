@@ -4,6 +4,12 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
+    repositories {
+        maven {
+            url "https://repo.eclipse.org/content/repositories/paho-snapshots/"
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
