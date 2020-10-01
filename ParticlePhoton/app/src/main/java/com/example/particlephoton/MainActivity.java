@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         changeView(new Login(this));
     }
 
-    public void stopShooter() throws ParticleCloudException, IOException, ParticleDevice.FunctionDoesNotExistException {
+    public void shooter() throws ParticleCloudException, IOException, ParticleDevice.FunctionDoesNotExistException {
         Async.executeAsync(childDevice, new Async.ApiWork<ParticleDevice, Integer>() {
             @Override
             public Integer callApi(ParticleDevice particleDevice) throws ParticleCloudException, IOException {
@@ -78,6 +78,72 @@ public class MainActivity extends AppCompatActivity {
                         database.getReference("state", "shot").setValue(false);
                         shot = false;
                     }
+                } catch (ParticleDevice.FunctionDoesNotExistException e) {
+                    e.printStackTrace();
+                }
+                return temp;
+            }
+            @Override
+            public void onSuccess(Integer integer) {
+
+            }
+            @Override
+            public void onFailure(ParticleCloudException exception) {
+
+            }
+        });
+    }
+
+    public void caution() throws ParticleCloudException {
+        Async.executeAsync(childDevice, new Async.ApiWork<ParticleDevice, Integer>() {
+            @Override
+            public Integer callApi(ParticleDevice particleDevice) throws ParticleCloudException, IOException {
+                try {
+                    temp = childDevice.callFunction("Caution");
+                } catch (ParticleDevice.FunctionDoesNotExistException e) {
+                    e.printStackTrace();
+                }
+                return temp;
+            }
+            @Override
+            public void onSuccess(Integer integer) {
+
+            }
+            @Override
+            public void onFailure(ParticleCloudException exception) {
+
+            }
+        });
+    }
+
+    public void normal() throws ParticleCloudException {
+        Async.executeAsync(childDevice, new Async.ApiWork<ParticleDevice, Integer>() {
+            @Override
+            public Integer callApi(ParticleDevice particleDevice) throws ParticleCloudException, IOException {
+                try {
+                    temp = childDevice.callFunction("Normal");
+                } catch (ParticleDevice.FunctionDoesNotExistException e) {
+                    e.printStackTrace();
+                }
+                return temp;
+            }
+            @Override
+            public void onSuccess(Integer integer) {
+
+            }
+            @Override
+            public void onFailure(ParticleCloudException exception) {
+
+            }
+        });
+    }
+
+    public void medical() throws ParticleCloudException {
+        Async.executeAsync(childDevice, new Async.ApiWork<ParticleDevice, Integer>() {
+            @Override
+            public Integer callApi(ParticleDevice particleDevice) throws ParticleCloudException, IOException {
+                try {
+                    temp = childDevice.callFunction("Medical");
                 } catch (ParticleDevice.FunctionDoesNotExistException e) {
                     e.printStackTrace();
                 }

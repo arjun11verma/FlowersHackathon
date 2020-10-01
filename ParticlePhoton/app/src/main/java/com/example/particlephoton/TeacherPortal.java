@@ -17,7 +17,7 @@ public class TeacherPortal extends BaseView {
         Button shooterBtn = activity.findViewById(R.id.shooterBtn);
         shooterBtn.setOnClickListener(onClick -> {
             try {
-                activity.stopShooter();
+                activity.shooter();
             } catch (ParticleCloudException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -26,5 +26,40 @@ public class TeacherPortal extends BaseView {
                 e.printStackTrace();
             }
         });
+
+        activity.findViewById(R.id.button2).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    activity.caution();
+                } catch (ParticleCloudException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        activity.findViewById(R.id.button3).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    activity.normal();
+                } catch (ParticleCloudException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        activity.findViewById(R.id.button4).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    activity.medical();
+                } catch (ParticleCloudException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
+
+
 }
