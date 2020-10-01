@@ -17,7 +17,7 @@ public class TeacherPortal extends BaseView {
         Button shooterBtn = activity.findViewById(R.id.shooterBtn);
         shooterBtn.setOnClickListener(onClick -> {
             try {
-                activity.shooter();
+                activity.stopShooter();
             } catch (ParticleCloudException e) {
                 e.printStackTrace();
             } catch (IOException e) {
