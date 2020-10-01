@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private User thisUser;
     private BaseView thisView;
     private boolean ifShot[];
-    private int temp;
+    private int temp = 1;
     private ParticleCloudSDK particle;
 
     @SuppressLint("WrongThread")
@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
         ifShot = new boolean[]{true, false, false, false};
 
         Async.executeAsync(particle.getCloud(), new Async.ApiWork<ParticleCloud, Object>() {
-
             @Override
             public Object callApi(ParticleCloud particleCloud) throws ParticleCloudException, IOException {
                 particleCloud.logIn("tsa0662@gmail.com", "something");
@@ -66,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public Integer callApi(ParticleDevice particleDevice) throws ParticleCloudException, IOException {
                     try {
-                        temp = childDevice.callFunction("Danger");
+                        temp = childDevice.callFunction("DangerOn");
                     } catch (ParticleDevice.FunctionDoesNotExistException e) {
                         e.printStackTrace();
                     }
@@ -84,6 +83,33 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
             ifShot[0] = true;
+        }
+    }
+
+    public void stopShooter() throws ParticleCloudException, IOException, ParticleDevice.FunctionDoesNotExistException {
+        if(ifShot[0] == true) {
+            Async.executeAsync(childDevice, new Async.ApiWork<ParticleDevice, Integer>() {
+                @Override
+                public Integer callApi(ParticleDevice particleDevice) throws ParticleCloudException, IOException {
+                    try {
+                        temp = childDevice.callFunction("DangerOff");
+                    } catch (ParticleDevice.FunctionDoesNotExistException e) {
+                        e.printStackTrace();
+                    }
+                    return temp;
+                }
+
+                @Override
+                public void onSuccess(Integer integer) {
+
+                }
+
+                @Override
+                public void onFailure(ParticleCloudException exception) {
+
+                }
+            });
+            ifShot[0] = false;
         }
     }
 

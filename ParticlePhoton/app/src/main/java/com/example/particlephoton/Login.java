@@ -58,6 +58,7 @@ public class Login extends BaseView {
                                 isValidPassword = true;
                                 activity.setThisUser(new User(username, password));
                                 activity.changeView(new TeacherPortal(activity));
+                                break;
                             }
                         }
                     }
@@ -77,7 +78,6 @@ public class Login extends BaseView {
         });
 
         Button createAccount = activity.findViewById(R.id.createAccountButton);
-        //If the create account is clicked, send the user to the signup.xml
         createAccount.setOnClickListener(onClick -> {
             activity.changeView(new CreateAccount(activity));
         });
