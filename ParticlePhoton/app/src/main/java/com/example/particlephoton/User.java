@@ -5,6 +5,7 @@ public class User {
     private String password;
     private String deviceID;
     private boolean in;
+    private boolean principal = false;
 
     public User(String username, String password, String deviceID, boolean in) {
         this.username = username;
@@ -22,6 +23,10 @@ public class User {
     }
 
     public boolean getIn() { return in; }
+
+    public void setPrincipal() { principal = true; }
+
+    public boolean getPrincipal() { return principal; }
 
     public String getDeviceID() { return deviceID; }
 }

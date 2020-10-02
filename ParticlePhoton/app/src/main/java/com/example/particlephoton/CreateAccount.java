@@ -18,6 +18,7 @@ public class CreateAccount extends BaseView {
     private EditText createPassword;
     private EditText uniqueID;
     private String thisID = "ARJUNISLAZY";
+    private String principalID = "ARJUNISCOOL";
     private boolean checkValid;
 
     public CreateAccount(Context context) {
@@ -34,9 +35,11 @@ public class CreateAccount extends BaseView {
             String id = uniqueID.getText().toString();
             checkValid = true;
 
-            if(id.isEmpty() || !(thisID.equals(id))) {
-                uniqueID.setError("This is not a valid ID!");
-                checkValid = false;
+            if(id.isEmpty() && !(thisID.equals(id))) {
+                if(!principalID.equals(id)) {
+                    uniqueID.setError("This is not a valid ID!");
+                    checkValid = false;
+                }
             }
 
             if(username.isEmpty()) {
@@ -70,6 +73,9 @@ public class CreateAccount extends BaseView {
 
             if(checkValid) {
                 User newUser = new User(username, password, activity.getDeviceID(), true);
+                if(principalID.equals(id)) {
+                    newUser.setPrincipal();
+                }
                 ref.child(username).setValue(newUser);
                 activity.changeView(new Login(activity));
             }

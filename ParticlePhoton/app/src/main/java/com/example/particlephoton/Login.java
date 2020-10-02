@@ -55,10 +55,15 @@ public class Login extends BaseView {
                             isValidUser = true;
                             if((user.child("password").getValue().equals(password)))
                             {
-                                isValidPassword = true;
-                                activity.getDatabase().getReference("Users").child(username).setValue(new User(username, password, activity.getDeviceID(), true));
-                                activity.changeView(new TeacherPortal(activity));
-                                break;
+                                if((boolean)user.child("principal").getValue()) {
+                                    activity.changeView(new PrincipalView(activity));
+                                }
+                                else {
+                                    isValidPassword = true;
+                                    activity.getDatabase().getReference("Users").child(username).setValue(new User(username, password, activity.getDeviceID(), true));
+                                    activity.changeView(new TeacherPortal(activity));
+                                    break;
+                                }
                             }
                         }
                     }
