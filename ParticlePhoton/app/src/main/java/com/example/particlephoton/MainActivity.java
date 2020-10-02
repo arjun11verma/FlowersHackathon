@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.provider.Settings;
 import android.provider.Telephony;
 import android.util.Log;
 import android.view.View;
@@ -33,7 +34,9 @@ public class MainActivity extends AppCompatActivity {
     private BaseView thisView;
     private int temp = 1;
     private boolean shot = false;
+    private int in = 1;
     private ParticleCloudSDK particle;
+    private String deviceID;
 
     @SuppressLint("WrongThread")
     @Override
@@ -60,7 +63,49 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        changeView(new Login(this));
+        deviceID = getIMEI();
+
+        checkLoggedIn();
+
+        if(in == 1) {
+            changeView(new TeacherPortal(this));
+        }
+        else {
+            changeView(new Login(this));
+        }
+    }
+
+    public String getIMEI() {
+        String IMEI = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        return IMEI;
+    }
+
+    public String getDeviceID() {
+        return deviceID;
+    }
+
+    public void checkLoggedIn() {
+        database.getReference("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot child: snapshot.getChildren()) {
+                    if(((String)child.child("deviceID").getValue()).equals(deviceID)) {
+                        if((boolean)(child.child("in").getValue())) {
+                            setIn();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void setIn() {
+        in = 10;
     }
 
     public void shooter() throws ParticleCloudException, IOException, ParticleDevice.FunctionDoesNotExistException {
@@ -68,16 +113,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public Integer callApi(ParticleDevice particleDevice) throws ParticleCloudException, IOException {
                 try {
-                    if(!shot) {
-                        temp = childDevice.callFunction("DangerOn");
-                        database.getReference("state", "shot").setValue(true);
-                        shot = true;
-                    }
-                    else {
-                        temp = childDevice.callFunction("DangerOff");
-                        database.getReference("state", "shot").setValue(false);
-                        shot = false;
-                    }
+                    temp = childDevice.callFunction("DangerOn");
+                    database.getReference("state", "shot").setValue(true);
                 } catch (ParticleDevice.FunctionDoesNotExistException e) {
                     e.printStackTrace();
                 }
@@ -100,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
             public Integer callApi(ParticleDevice particleDevice) throws ParticleCloudException, IOException {
                 try {
                     temp = childDevice.callFunction("Caution");
+                    database.getReference("state", "caution").setValue(true);
                 } catch (ParticleDevice.FunctionDoesNotExistException e) {
                     e.printStackTrace();
                 }
@@ -122,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
             public Integer callApi(ParticleDevice particleDevice) throws ParticleCloudException, IOException {
                 try {
                     temp = childDevice.callFunction("Normal");
+                    database.getReference("state", "normal").setValue(true);
                 } catch (ParticleDevice.FunctionDoesNotExistException e) {
                     e.printStackTrace();
                 }
@@ -144,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
             public Integer callApi(ParticleDevice particleDevice) throws ParticleCloudException, IOException {
                 try {
                     temp = childDevice.callFunction("Medical");
+                    database.getReference("state", "medical").setValue(true);
                 } catch (ParticleDevice.FunctionDoesNotExistException e) {
                     e.printStackTrace();
                 }

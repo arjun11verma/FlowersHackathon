@@ -56,7 +56,7 @@ public class Login extends BaseView {
                             if((user.child("password").getValue().equals(password)))
                             {
                                 isValidPassword = true;
-                                activity.setThisUser(new User(username, password));
+                                activity.setThisUser(new User(username, password, activity.getDeviceID(), true));
                                 activity.changeView(new TeacherPortal(activity));
                                 break;
                             }

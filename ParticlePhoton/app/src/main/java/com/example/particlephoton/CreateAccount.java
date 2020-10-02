@@ -69,7 +69,7 @@ public class CreateAccount extends BaseView {
             });
 
             if(checkValid) {
-                User newUser = new User(username, password);
+                User newUser = new User(username, password, activity.getDeviceID(), true);
                 ref.child(username).setValue(newUser);
                 activity.changeView(new Login(activity));
             }

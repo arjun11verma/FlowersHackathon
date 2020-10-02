@@ -27,7 +27,7 @@ public class TeacherPortal extends BaseView {
             }
         });
 
-        activity.findViewById(R.id.button2).setOnClickListener(new OnClickListener() {
+        activity.findViewById(R.id.cautionBtn).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
@@ -38,7 +38,7 @@ public class TeacherPortal extends BaseView {
             }
         });
 
-        activity.findViewById(R.id.button3).setOnClickListener(new OnClickListener() {
+        activity.findViewById(R.id.normalBtn).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
@@ -49,7 +49,7 @@ public class TeacherPortal extends BaseView {
             }
         });
 
-        activity.findViewById(R.id.button4).setOnClickListener(new OnClickListener() {
+        activity.findViewById(R.id.medicalBtn).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
@@ -57,6 +57,13 @@ public class TeacherPortal extends BaseView {
                 } catch (ParticleCloudException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+        activity.findViewById(R.id.logout).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }
