@@ -33,15 +33,15 @@ public class MainActivity extends AppCompatActivity {
     private User thisUser;
     private BaseView thisView;
     private int temp = 1;
-    private boolean shot = false;
-    private int in = 1;
     private ParticleCloudSDK particle;
     private String deviceID;
+    private MainActivity activity = this;
 
     @SuppressLint("WrongThread")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         particle.init(this);
 
         Async.executeAsync(particle.getCloud(), new Async.ApiWork<ParticleCloud, Object>() {
@@ -65,14 +65,26 @@ public class MainActivity extends AppCompatActivity {
 
         deviceID = getIMEI();
 
-        checkLoggedIn();
+        database.getReference("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                boolean temper = true;
+                for(DataSnapshot child: snapshot.getChildren()) {
+                    if(((String)child.child("deviceID").getValue()).equals(deviceID)) {
+                        if((boolean)(child.child("in")).getValue()) {
+                            changeView(new TeacherPortal(activity));
+                            temper = false;
+                            break;
+                        }
+                    }
+                }
+                if(temper) { changeView(new Login(activity)); }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-        if(in == 1) {
-            changeView(new TeacherPortal(this));
-        }
-        else {
-            changeView(new Login(this));
-        }
+            }
+        });
     }
 
     public String getIMEI() {
@@ -84,36 +96,13 @@ public class MainActivity extends AppCompatActivity {
         return deviceID;
     }
 
-    public void checkLoggedIn() {
-        database.getReference("Users").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot child: snapshot.getChildren()) {
-                    if(((String)child.child("deviceID").getValue()).equals(deviceID)) {
-                        if((boolean)(child.child("in").getValue())) {
-                            setIn();
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    public void setIn() {
-        in = 10;
-    }
-
     public void shooter() throws ParticleCloudException, IOException, ParticleDevice.FunctionDoesNotExistException {
         Async.executeAsync(childDevice, new Async.ApiWork<ParticleDevice, Integer>() {
             @Override
             public Integer callApi(ParticleDevice particleDevice) throws ParticleCloudException, IOException {
                 try {
                     temp = childDevice.callFunction("DangerOn");
+                    temp = childDevice.callFunction("NormalOff");
                     database.getReference("state", "shot").setValue(true);
                 } catch (ParticleDevice.FunctionDoesNotExistException e) {
                     e.printStackTrace();
@@ -136,31 +125,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public Integer callApi(ParticleDevice particleDevice) throws ParticleCloudException, IOException {
                 try {
-                    temp = childDevice.callFunction("Caution");
+                    temp = childDevice.callFunction("CautionOn");
+                    temp = childDevice.callFunction("NormalOff");
                     database.getReference("state", "caution").setValue(true);
-                } catch (ParticleDevice.FunctionDoesNotExistException e) {
-                    e.printStackTrace();
-                }
-                return temp;
-            }
-            @Override
-            public void onSuccess(Integer integer) {
-
-            }
-            @Override
-            public void onFailure(ParticleCloudException exception) {
-
-            }
-        });
-    }
-
-    public void normal() throws ParticleCloudException {
-        Async.executeAsync(childDevice, new Async.ApiWork<ParticleDevice, Integer>() {
-            @Override
-            public Integer callApi(ParticleDevice particleDevice) throws ParticleCloudException, IOException {
-                try {
-                    temp = childDevice.callFunction("Normal");
-                    database.getReference("state", "normal").setValue(true);
                 } catch (ParticleDevice.FunctionDoesNotExistException e) {
                     e.printStackTrace();
                 }
@@ -182,7 +149,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public Integer callApi(ParticleDevice particleDevice) throws ParticleCloudException, IOException {
                 try {
-                    temp = childDevice.callFunction("Medical");
+                    temp = childDevice.callFunction("MedicalOn");
+                    temp = childDevice.callFunction("NormalOff");
                     database.getReference("state", "medical").setValue(true);
                 } catch (ParticleDevice.FunctionDoesNotExistException e) {
                     e.printStackTrace();
