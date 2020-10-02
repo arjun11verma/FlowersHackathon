@@ -51,7 +51,7 @@ public class PrincipalView extends BaseView {
         activity.findViewById(R.id.logout).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+
             }
         });
 
