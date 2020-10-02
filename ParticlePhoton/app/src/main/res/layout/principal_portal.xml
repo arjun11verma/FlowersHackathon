@@ -59,4 +59,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/shooterBtnOff"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/redxicon"
+        app:layout_constraintStart_toEndOf="@+id/shooterBtn"
+        tools:layout_editor_absoluteY="236dp" />
+
+    <Button
+        android:id="@+id/cautionBtnOff"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/yellowxicon"
+        app:layout_constraintStart_toEndOf="@+id/cautionBtn"
+        tools:layout_editor_absoluteY="341dp" />
+
+    <Button
+        android:id="@+id/medicalBtnOff"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/bluexicon"
+        app:layout_constraintStart_toEndOf="@+id/medicalBtn"
+        tools:layout_editor_absoluteY="446dp" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
