@@ -4,6 +4,12 @@ import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
 import java.io.IOException;
 
 import io.particle.android.sdk.cloud.ParticleDevice;
@@ -52,10 +58,23 @@ public class TeacherPortal extends BaseView {
         activity.findViewById(R.id.logout).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                activity.getDatabase().getReference("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for(DataSnapshot child: snapshot.getChildren()) {
+                            if(((String)child.child("deviceID").getValue()).equals(activity.getDeviceID())) {
+                                activity.getDatabase().getReference("Users").child((String)child.child("username").getValue()).child("in").setValue(false);
+                            }
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
 
+                    }
+                });
+
+                activity.changeView(new Login(activity));
             }
         });
     }
-
-
 }

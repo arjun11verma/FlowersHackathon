@@ -125,8 +125,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public Integer callApi(ParticleDevice particleDevice) throws ParticleCloudException, IOException {
                 try {
-                    temp = childDevice.callFunction("ShooterOff");
-                    temp = childDevice.callFunction("NormalOn");
+                    temp = childDevice.callFunction("DangerOff");
                     database.getReference("state", "shot").setValue(false);
                 } catch (ParticleDevice.FunctionDoesNotExistException e) {
                     e.printStackTrace();
@@ -174,8 +173,7 @@ public class MainActivity extends AppCompatActivity {
             public Integer callApi(ParticleDevice particleDevice) throws ParticleCloudException, IOException {
                 try {
                     temp = childDevice.callFunction("CautionOff");
-                    temp = childDevice.callFunction("NormalOff");
-                    database.getReference("state", "caution").setValue(true);
+                    database.getReference("state", "caution").setValue(false);
                 } catch (ParticleDevice.FunctionDoesNotExistException e) {
                     e.printStackTrace();
                 }
@@ -222,7 +220,6 @@ public class MainActivity extends AppCompatActivity {
             public Integer callApi(ParticleDevice particleDevice) throws ParticleCloudException, IOException {
                 try {
                     temp = childDevice.callFunction("MedicalOff");
-                    temp = childDevice.callFunction("NormalOn");
                     database.getReference("state", "medical").setValue(false);
                 } catch (ParticleDevice.FunctionDoesNotExistException e) {
                     e.printStackTrace();
@@ -235,6 +232,50 @@ public class MainActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(ParticleCloudException exception) {
+
+            }
+        });
+    }
+
+    public void normal() throws ParticleCloudException {
+        database.getReference("state").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                boolean temper = true;
+                for(DataSnapshot child: snapshot.getChildren()) {
+                    if(((boolean)child.getValue())) {
+                        temper = false;
+                        break;
+                    }
+                }
+                if(temper) {
+                    try {
+                        Async.executeAsync(childDevice, new Async.ApiWork<ParticleDevice, Integer>() {
+                            @Override
+                            public Integer callApi(ParticleDevice particleDevice) throws ParticleCloudException, IOException {
+                                try {
+                                    temp = childDevice.callFunction("NormalOn");
+                                } catch (ParticleDevice.FunctionDoesNotExistException e) {
+                                    e.printStackTrace();
+                                }
+                                return temp;
+                            }
+                            @Override
+                            public void onSuccess(Integer integer) {
+
+                            }
+                            @Override
+                            public void onFailure(ParticleCloudException exception) {
+
+                            }
+                        });
+                    } catch (ParticleCloudException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });

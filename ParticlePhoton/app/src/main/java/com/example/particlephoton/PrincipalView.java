@@ -5,13 +5,16 @@ import android.view.View;
 import android.widget.Button;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import io.particle.android.sdk.cloud.ParticleDevice;
 import io.particle.android.sdk.cloud.exceptions.ParticleCloudException;
 
 public class PrincipalView extends BaseView {
+
     public PrincipalView(Context context) {
         super(context);
+        activity.setContentView(R.layout.principal_portal);
 
         Button shooterBtn = activity.findViewById(R.id.shooterBtn);
         shooterBtn.setOnClickListener(onClick -> {
@@ -58,6 +61,7 @@ public class PrincipalView extends BaseView {
         activity.findViewById(R.id.shooterBtnOff).setOnClickListener(onClick -> {
             try {
                 activity.shooterOff();
+                activity.normal();
             } catch (ParticleCloudException e) {
                 e.printStackTrace();
             }
@@ -68,6 +72,7 @@ public class PrincipalView extends BaseView {
             public void onClick(View v) {
                 try {
                     activity.cautionOff();
+                    activity.normal();
                 } catch (ParticleCloudException e) {
                     e.printStackTrace();
                 }
@@ -79,6 +84,7 @@ public class PrincipalView extends BaseView {
             public void onClick(View v) {
                 try {
                     activity.medicalOff();
+                    activity.normal();
                 } catch (ParticleCloudException e) {
                     e.printStackTrace();
                 }
